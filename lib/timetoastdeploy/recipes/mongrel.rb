@@ -3,6 +3,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   set :proxy_port, 8000
   set :proxy_address, "127.0.0.1"
   set :proxy_environment, "production"
+  
   set :mongrel_conf, nil
   set :mongrel_user, nil
   set :mongrel_group, nil
@@ -28,14 +29,14 @@ Capistrano::Configuration.instance(:must_exist).load do
           argv << "#{mongrel_rails} cluster::configure"
           argv << "-N #{proxy_servers.to_s}"
           argv << "-p #{proxy_port.to_s}"
-          argv << "-e #{mongrel_environment}"
+          argv << "-e #{proxy_environment}"
           argv << "-a #{proxy_address}"
           argv << "-c #{current_path}"
           argv << "-C #{mongrel_conf}"
           argv << "-P #{mongrel_pid_file}"
           argv << "-l #{mongrel_log_file}" if mongrel_log_file
-          argv << "--user #{proxy_user}" if proxy_user
-          argv << "--group #{proxy_group}" if proxy_group
+          argv << "--user #{proxy_server_user}" if proxy_server_user
+          argv << "--group #{proxy_server_group}" if proxy_server_group
           argv << "--prefix #{mongrel_prefix}" if mongrel_prefix
           argv << "-S #{mongrel_config_script}" if mongrel_config_script
           cmd = argv.join " "

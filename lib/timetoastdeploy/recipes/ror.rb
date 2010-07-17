@@ -13,7 +13,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 namespace :ror do
     
     task :set_env do
-      set :vhost_template, "ror_#{proxy_server_type}_vhost.erb"
+      set :vhost_template, "ror_#{web_server_type}_vhost.erb"
     end
     
     task :ownership, :roles => [:app] do
@@ -68,7 +68,7 @@ namespace :ror do
           set :rails_server_environment, rails_env
           set :proxy_server_port, proxy_port
           set :proxy_server_user, user unless proxy_server_user
-          set :proxy_server_group, proxy_server_group unless proxy_server_group
+          set :proxy_server_group, proxy_server_user unless proxy_server_group
 
           case proxy_server_type
           when 'mongrel'
