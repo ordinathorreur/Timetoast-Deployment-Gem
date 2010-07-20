@@ -1,6 +1,7 @@
 require 'timetoastdeploy/recipes/mysql'
 require 'timetoastdeploy/recipes/nginx'
 require 'timetoastdeploy/recipes/mongrel'
+require 'timetoastdeploy/recipes/thin'
 
 Capistrano::Configuration.instance(:must_exist).load do
   
