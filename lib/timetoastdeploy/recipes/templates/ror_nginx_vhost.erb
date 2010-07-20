@@ -1,8 +1,6 @@
-upstream <%= "#{application}_cluster" %> {
-  <% start_port = proxy_port %>
-  <% end_port = proxy_port + proxy_servers - 1 %>
-  <% start_port.upto(end_port) do |port| %>
-  server <%= "#{proxy_address}:#{port.to_s};" %>
+upstream <%= "#{application}_#{proxy_server_type}_cluster" %> {
+  <% proxy_servers.times do |num| %>
+  server <%= "#{proxy_address}:#{proxy_port + num};" %>
   <% end %>
 }
  
@@ -25,7 +23,19 @@ server {
     if (-f $request_filename/index.html) {
       rewrite (.*) $1/index.html break;
     }
- 
+
+    # Start Capistrano web enable and disable (redirects all if maintenance file exists, except for images and swfs)
+    if (-f $document_root/system/maintenance.html) {
+      set $maintenance 1;
+    }
+    if ($request_uri ~* (jpg|jpeg|gif|js|css|swf)$) {
+      set $maintenance 0;
+    }
+    if ($maintenance) {
+      rewrite  ^(.*)$  /system/maintenance.html break;
+    }
+    # End Capistrano web enable/disable
+
     if (-f $request_filename.html) {
       rewrite (.*) $1.html break;
     }
@@ -34,6 +44,6 @@ server {
       rewrite (.*) $1.txt break;
     }
  
-    proxy_pass http://<%= "#{application}_cluster" %>;
+    proxy_pass http://<%= "#{application}_#{proxy_server_type}_cluster" %>;
   }
 }

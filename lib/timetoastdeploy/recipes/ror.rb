@@ -74,7 +74,7 @@ namespace :ror do
           when 'mongrel'
             mongrel.cluster.configure
           when 'thin'
-            #thin.cluster.configure
+            thin.cluster.configure
           end
           
         end #end setup
@@ -106,7 +106,6 @@ namespace :ror do
       Start the rails server processes on the app server.
       DESC
       task :start, :roles => :app do
-        puts "Gonna start yer server honky!"
         case proxy_server_type
         when 'mongrel'
           mongrel.cluster.start
@@ -119,7 +118,6 @@ namespace :ror do
       Restart the rails server processes on the app server.
       DESC
       task :restart, :roles => :app do
-        puts "Gonna restart yer server honky!"
         case proxy_server_type
         when 'mongrel'
           mongrel.cluster.restart
@@ -132,7 +130,6 @@ namespace :ror do
       Stop the rails server processes on the app server.
       DESC
       task :stop, :roles => :app do
-        puts "Gonna stop yer server honky!"
         case proxy_server_type
         when 'mongrel'
           mongrel.cluster.stop
