@@ -24,7 +24,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :configure, :roles => :app do
         set_thin_conf
         set_thin_pid_file
-        sudo thin config -C /etc/thin/<config-name>.yml -c <rails-app-root-path> --servers <number-of-threads> -e <environment>
+        
         argv = []
         argv << "#{thin_rails} config"
         argv << "-s #{proxy_servers.to_s}"
