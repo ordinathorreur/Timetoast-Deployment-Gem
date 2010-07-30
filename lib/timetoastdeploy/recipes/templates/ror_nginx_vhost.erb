@@ -13,6 +13,8 @@ server {
   access_log  <%= "#{current_path}/log/nginx_access.log" %>;
   error_log  <%= "#{current_path}/log/nginx_error.log" %>;
 
+  client_max_body_size 4m;
+
   location / {
     proxy_set_header  X-Real-IP  $remote_addr;
     proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
