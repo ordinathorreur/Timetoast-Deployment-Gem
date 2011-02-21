@@ -1,0 +1,4 @@
+This is an old gem that was previously used to deploy Timetoast. It might be handy if you're using thin or mongrel instead of Passenger (Timetoast has since switched to Passenger)
+
+rake manifest
+rake install
